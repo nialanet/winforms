@@ -332,7 +332,7 @@ Namespace Microsoft.VisualBasic.ApplicationServices
 
                 ' Note: Must pass the calling assembly from here so we can get the running app.
                 ' Otherwise, can break single instance.
-                Dim ApplicationInstanceID As String = GetApplicationInstanceID(Assembly.GetCallingAssembly)
+                Dim ApplicationInstanceID As String = GetApplicationInstanceID(Assembly.GetCallingAssembly) & Environment.UserName
                 Dim pipeServer As NamedPipeServerStream = Nothing
 
                 If TryCreatePipeServer(ApplicationInstanceID, pipeServer) Then
