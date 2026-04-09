@@ -983,18 +983,20 @@ Namespace Microsoft.VisualBasic.ApplicationServices
 
             Dim guidAttrib As GuidAttribute = entry.GetCustomAttribute(Of GuidAttribute)()
 
+            Dim currentUserSID As String = Principal.WindowsIdentity.GetCurrent().User.Value
+
             If guidAttrib IsNot Nothing Then
 
                 Dim version As Version = entry.GetName.Version
 
                 If version IsNot Nothing Then
-                    Return $"{guidAttrib.Value}{version.Major}.{version.Minor}"
+                    Return $"{guidAttrib.Value}{version.Major}.{version.Minor}-{currentUserSID}"
                 Else
-                    Return guidAttrib.Value
+                    Return $"{guidAttrib.Value}-{currentUserSID}"
                 End If
             End If
 
-            Return entry.ManifestModule.ModuleVersionId.ToString()
+            Return $"{entry.ManifestModule.ModuleVersionId}-{currentUserSID}"
         End Function
 
         ''' <summary>
